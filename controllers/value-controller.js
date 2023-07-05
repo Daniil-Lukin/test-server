@@ -1,4 +1,4 @@
-const valueService = require("../services/ivalue-service");
+const valueService = require("../services/value-service");
 
 class ValueController {
   async create(req, res) {

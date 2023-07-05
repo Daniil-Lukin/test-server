@@ -51,26 +51,28 @@ class UserService {
   }
 
   async getDataToSend(userData) {
-    const { id, email, ...rest } = userData;
-    const tokens = tokenService.generateToken({ id, email });
-    await tokenService.saveToken(id, tokens.refreshToken);
+    const { _id, email, ...rest } = userData;
+    const tokens = tokenService.generateToken({ _id, email });
+    await tokenService.saveToken(_id, tokens.refreshToken);
 
     return {
       ...tokens,
       email,
+      _id,
     };
   }
 
-  async deleteUser(email) {
-    const userData = await userModel.findOneAndDelete({ email });
+  async deleteUser(_id) {
+    const userData = await userModel.findOneAndDelete({ _id });
     if (!userData) {
-      throw new Error(`${email} user was not found`);
+      throw new Error(`${_id} user was not found`);
     }
     const { refreshToken, ...info } = await tokenModel.findOneAndDelete({
       user: userData._id,
     });
 
-    return userData;
+    const responseData = { _id: _id, email: userData.email };
+    return responseData;
   }
 }
 

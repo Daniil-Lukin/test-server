@@ -64,8 +64,8 @@ class AuthController {
 
   async delete(req, res) {
     try {
-      const { email } = req.body;
-      const deletedUserData = await userService.deleteUser(email);
+      const id = req.params.id;
+      const deletedUserData = await userService.deleteUser(id);
       res.clearCookie("refreshToken");
       res.status(200).json({ message: deletedUserData });
     } catch (e) {

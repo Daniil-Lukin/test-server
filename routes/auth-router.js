@@ -18,6 +18,6 @@ router.post(
 router.post("/login", controller.login);
 router.post("/logout", controller.logout);
 router.get("/refresh", controller.refresh);
-router.delete("", authMiddleWare, controller.delete);
+router.delete("/:id", authMiddleWare, controller.delete);
 
 module.exports = router;

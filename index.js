@@ -1,4 +1,5 @@
 require("dotenv").config();
+const cors = require("cors");
 const express = require("express");
 const PORT = process.env.PORT || 3000;
 const mongoose = require("mongoose");
@@ -8,10 +9,16 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 
+app.use(
+  cors({
+    credentials: true,
+    origin: process.env.CLIENT_URL,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
-app.use("/auth", authRouter);
-app.use("/input", valueRouter);
+app.use("api/auth", authRouter);
+app.use("api/input", valueRouter);
 
 const start = async () => {
   try {
